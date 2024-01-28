@@ -57,23 +57,38 @@ body {
 
 .button-grid {
   display: grid;
-  grid-template-columns: repeat(
-    4,
-    1fr
-  ); /* Creates four columns of equal width */
-  grid-gap: 10px; /* Adjust the gap between buttons as needed */
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto auto auto;
+  grid-gap: 10px;
+}
+
+.button {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+#btn-0 {
+  grid-column: 1 / span 2;
+}
+
+#btn-enter {
+  grid-row: 4;
+  grid-column: 4;
+}
+
+#btn-dot {
+  grid-row: 4;
+  grid-column: 3;
 }
 
 .number-button,
 .function-button,
 .operation-button {
-  padding: 20px;
-  font-size: 1.5em; /* Adjust the font size as needed */
-  font-family: "Digital-7 Mono", "Orbitron", monospace;
-  /* ... other styles ... */
+  font-family: "Digital-7 Mono", monospace;
 }
 
 .button {
+  font-family: "Digital-7 Mono", monospace;
   border: none;
   border-radius: 5px;
   margin: 5px;
