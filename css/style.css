@@ -1,6 +1,28 @@
 body {
   font-family: "Orbitron", sans-serif;
 }
+
+@font-face {
+  font-family: "Digital-7 Mono";
+  src: url("../fonts/Digital-7_Mono.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Digital-7";
+  src: url("../fonts/Digital-7_Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Digital-7 Mono";
+  src: url("../fonts/Digital-7_Mono_Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
 .calculator {
   background-color: #1c3c6d;
   width: 250px;
