@@ -58,7 +58,7 @@ body {
 .button-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: repeat(5, 1fr);
   grid-gap: 10px;
 }
 
@@ -67,17 +67,18 @@ body {
   grid-row: span 1;
 }
 
-#btn-0 {
-  grid-column: 1 / span 2;
-}
-
 #btn-enter {
-  grid-row: 4;
+  grid-row: 5;
   grid-column: 4;
 }
 
+#btn-0 {
+  grid-row: 5;
+  grid-column: 2;
+}
+
 #btn-dot {
-  grid-row: 4;
+  grid-row: 5;
   grid-column: 3;
 }
 
@@ -85,15 +86,11 @@ body {
 .function-button,
 .operation-button {
   font-family: "Digital-7 Mono", monospace;
-}
-
-.button {
-  font-family: "Digital-7 Mono", monospace;
-  border: none;
-  border-radius: 5px;
-  margin: 5px;
+  font-size: 1rem;
   padding: 15px;
   box-shadow: 0 2px #999;
+  border: none;
+  border-radius: 5px;
 }
 
 .button:active {
