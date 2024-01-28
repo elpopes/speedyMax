@@ -55,6 +55,24 @@ body {
   color: #fff;
 }
 
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* Creates four columns of equal width */
+  grid-gap: 10px; /* Adjust the gap between buttons as needed */
+}
+
+.number-button,
+.function-button,
+.operation-button {
+  padding: 20px;
+  font-size: 1.5em; /* Adjust the font size as needed */
+  font-family: "Digital-7 Mono", "Orbitron", monospace;
+  /* ... other styles ... */
+}
+
 .button {
   border: none;
   border-radius: 5px;
