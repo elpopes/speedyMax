@@ -49,7 +49,7 @@ let userInput = "";
 function handleInput(input) {
   const displayElement = document.getElementById("display");
 
-  if (input === "Enter") {
+  if (input === "Ent") {
     checkAnswer(userInput);
     userInput = "";
   } else {
