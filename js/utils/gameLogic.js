@@ -9,7 +9,7 @@ let isGameActive = false;
 function startGame() {
   if (isGameActive) return;
   isGameActive = true;
-  currentProblems = generateProblems(5);
+  currentProblems = generateProblems(10);
   currentProblemIndex = 0;
   startTime = Date.now();
   timer = setInterval(updateTimer, 1000);
