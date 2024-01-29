@@ -42,10 +42,10 @@ function generateProblem() {
   };
 
   const problemTypes = [
-    createAdditionProblem,
-    createSubtractionProblem,
+    // createAdditionProblem,
+    // createSubtractionProblem,
     createMultiplicationProblem,
-    createDivisionProblem,
+    // createDivisionProblem,
   ];
   const createProblem =
     problemTypes[Math.floor(Math.random() * problemTypes.length)];

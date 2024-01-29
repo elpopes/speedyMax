@@ -4,9 +4,12 @@ let currentProblemIndex = 0;
 let currentProblems = [];
 let timer = null;
 let startTime;
+let isGameActive = false;
 
 function startGame() {
-  currentProblems = generateProblems(20);
+  if (isGameActive) return;
+  isGameActive = true;
+  currentProblems = generateProblems(5);
   currentProblemIndex = 0;
   startTime = Date.now();
   timer = setInterval(updateTimer, 1000);
@@ -66,7 +69,7 @@ function checkAnswer(userAnswer) {
   } else {
     currentProblems.push(currentProblem);
     currentProblems.splice(currentProblemIndex, 1);
-    displayProblem(currentProblems[currentProblemIndex]);
+    nextProblem();
   }
 }
 
