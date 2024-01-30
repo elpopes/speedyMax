@@ -9,7 +9,7 @@ let isGameActive = false;
 function startGame() {
   if (isGameActive) return;
   isGameActive = true;
-  currentProblems = generateProblems(10);
+  currentProblems = generateProblems(5);
   currentProblemIndex = 0;
   startTime = Date.now();
   timer = setInterval(updateTimer, 1000);
@@ -22,9 +22,8 @@ function displayProblem(problem) {
 }
 
 function nextProblem() {
-  currentProblemIndex += 1;
-
-  if (currentProblemIndex < currentProblems.length) {
+  if (currentProblemIndex < currentProblems.length - 1) {
+    currentProblemIndex += 1;
     displayProblem(currentProblems[currentProblemIndex]);
   } else {
     endGame();
@@ -77,7 +76,7 @@ function endGame() {
   stopTimer();
   const totalTime = (Date.now() - startTime) / 1000;
   const displayElement = document.getElementById("display");
-  displayElement.textContent = `Completed in ${totalTime.toFixed(2)} seconds!`;
+  displayElement.textContent = `${totalTime.toFixed(2)} secs`;
 }
 
 export { startGame, handleInput };

@@ -42,8 +42,8 @@ function generateProblem() {
   };
 
   const problemTypes = [
-    createAdditionProblem,
-    createSubtractionProblem,
+    // createAdditionProblem,
+    // createSubtractionProblem,
     createMultiplicationProblem,
     createDivisionProblem,
   ];
