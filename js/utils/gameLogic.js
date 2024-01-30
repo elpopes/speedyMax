@@ -9,7 +9,7 @@ let isGameActive = false;
 function startGame() {
   if (isGameActive) return;
   isGameActive = true;
-  currentProblems = generateProblems(5);
+  currentProblems = generateProblems(10);
   currentProblemIndex = 0;
   startTime = Date.now();
   timer = setInterval(updateTimer, 1000);
@@ -67,6 +67,7 @@ function checkAnswer(userAnswer) {
     currentProblemIndex += 1;
   } else {
     currentProblems.push(currentProblem);
+    currentProblems.splice(currentProblemIndex, 1);
   }
 
   if (currentProblemIndex < currentProblems.length) {
