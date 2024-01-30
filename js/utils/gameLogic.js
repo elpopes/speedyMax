@@ -64,11 +64,15 @@ function checkAnswer(userAnswer) {
   const currentProblem = currentProblems[currentProblemIndex];
 
   if (parseInt(userAnswer) === currentProblem.answer) {
-    nextProblem();
+    currentProblemIndex += 1;
   } else {
     currentProblems.push(currentProblem);
-    currentProblems.splice(currentProblemIndex, 1);
-    nextProblem();
+  }
+
+  if (currentProblemIndex < currentProblems.length) {
+    displayProblem(currentProblems[currentProblemIndex]);
+  } else {
+    endGame();
   }
 }
 
