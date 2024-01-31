@@ -4,7 +4,7 @@ import {
   updateCompletionBar,
 } from "./utils/dotMatrixDisplay.js";
 
-initializeDotMatrixDisplay(10);
+initializeDotMatrixDisplay(20);
 
 function handleProgressUpdate(progressPercentage) {
   updateCompletionBar(progressPercentage);
