@@ -1,5 +1,4 @@
 import { generateProblems } from "./problemsGenerator.js";
-import { updateCompletionBar } from "./dotMatrixDisplay.js";
 
 let currentProblemIndex = 0;
 let currentProblems = [];
@@ -10,6 +9,7 @@ let isGameActive = false;
 function startGame() {
   if (isGameActive) return;
   isGameActive = true;
+  userInput = "";
   currentProblems = generateProblems(10);
   currentProblemIndex = 0;
   startTime = Date.now();
@@ -70,13 +70,26 @@ function handleInput(input, onProgressUpdate) {
 }
 
 function checkAnswer(userAnswer, onProgressUpdate) {
+  if (!userAnswer) return;
   const currentProblem = currentProblems[currentProblemIndex];
+  const isCorrect = parseInt(userAnswer) === currentProblem.answer;
 
-  if (parseInt(userAnswer) === currentProblem.answer) {
+  const displayElement = document.getElementById("display");
+  if (isCorrect) {
     currentProblemIndex += 1;
   } else {
+    displayElement.textContent = `${currentProblem.question} = ${currentProblem.answer}`;
     currentProblems.push(currentProblem);
     currentProblems.splice(currentProblemIndex, 1);
+
+    setTimeout(() => {
+      if (currentProblemIndex < currentProblems.length) {
+        displayProblem(currentProblems[currentProblemIndex]);
+      } else {
+        endGame();
+      }
+    }, 1000);
+    return;
   }
 
   if (currentProblemIndex < currentProblems.length) {
@@ -84,8 +97,8 @@ function checkAnswer(userAnswer, onProgressUpdate) {
   } else {
     endGame();
   }
-  const progressPercentage = currentProblemIndex / currentProblems.length;
-  onProgressUpdate(progressPercentage);
+
+  onProgressUpdate(currentProblemIndex / currentProblems.length);
 }
 
 function endGame() {
