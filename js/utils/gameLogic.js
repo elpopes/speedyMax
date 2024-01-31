@@ -54,6 +54,14 @@ function handleInput(input) {
   if (input === "Ent") {
     checkAnswer(userInput);
     userInput = "";
+  } else if (input === "O/C") {
+    userInput = "";
+    if (isGameActive) {
+      displayElement.textContent =
+        currentProblems[currentProblemIndex].question;
+    } else {
+      displayElement.textContent = "0";
+    }
   } else {
     userInput += input;
     displayElement.textContent = userInput;
