@@ -1,4 +1,5 @@
 import { generateProblems } from "./problemsGenerator.js";
+import { updateCompletionBar } from "./dotMatrixDisplay.js";
 
 let currentProblemIndex = 0;
 let currentProblems = [];
@@ -48,11 +49,11 @@ function stopTimer() {
 
 let userInput = "";
 
-function handleInput(input) {
+function handleInput(input, onProgressUpdate) {
   const displayElement = document.getElementById("display");
 
   if (input === "Ent") {
-    checkAnswer(userInput);
+    checkAnswer(userInput, onProgressUpdate);
     userInput = "";
   } else if (input === "O/C") {
     userInput = "";
@@ -68,7 +69,7 @@ function handleInput(input) {
   }
 }
 
-function checkAnswer(userAnswer) {
+function checkAnswer(userAnswer, onProgressUpdate) {
   const currentProblem = currentProblems[currentProblemIndex];
 
   if (parseInt(userAnswer) === currentProblem.answer) {
@@ -83,6 +84,8 @@ function checkAnswer(userAnswer) {
   } else {
     endGame();
   }
+  const progressPercentage = currentProblemIndex / currentProblems.length;
+  onProgressUpdate(progressPercentage);
 }
 
 function endGame() {
