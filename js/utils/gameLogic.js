@@ -1,3 +1,4 @@
+import { turnBarRed } from "./dotMatrixDisplay.js";
 import { generateProblems } from "./problemsGenerator.js";
 
 let currentProblemIndex = 0;
@@ -21,15 +22,6 @@ function startGame(onProgressUpdate) {
 function displayProblem(problem) {
   const displayElement = document.getElementById("display");
   displayElement.textContent = problem.question;
-}
-
-function nextProblem() {
-  if (currentProblemIndex < currentProblems.length - 1) {
-    currentProblemIndex += 1;
-    displayProblem(currentProblems[currentProblemIndex]);
-  } else {
-    endGame();
-  }
 }
 
 function updateTimer() {
@@ -83,6 +75,7 @@ function checkAnswer(userAnswer, onProgressUpdate) {
   if (isCorrect) {
     currentProblemIndex += 1;
   } else {
+    turnBarRed();
     displayElement.textContent = `${currentProblem.question} = ${currentProblem.answer}`;
     currentProblems.push(currentProblem);
     currentProblems.splice(currentProblemIndex, 1);

@@ -17,3 +17,12 @@ export function updateCompletionBar(progressPercentage) {
     dot.style.opacity = index < activeDotCount ? 1 : 0.2;
   });
 }
+
+export function turnBarRed() {
+  const dotMatrixDisplay = document.getElementById("dotMatrixDisplay");
+  dotMatrixDisplay.style.backgroundColor = "red";
+
+  setTimeout(() => {
+    dotMatrixDisplay.style.backgroundColor = "#151515";
+  }, 1000);
+}
