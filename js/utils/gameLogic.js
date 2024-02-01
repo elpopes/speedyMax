@@ -6,12 +6,13 @@ let timer = null;
 let startTime;
 let isGameActive = false;
 
-function startGame() {
+function startGame(onProgressUpdate) {
   if (isGameActive) return;
   isGameActive = true;
   userInput = "";
   currentProblems = generateProblems(10);
   currentProblemIndex = 0;
+  onProgressUpdate(0);
   startTime = Date.now();
   timer = setInterval(updateTimer, 1000);
   displayProblem(currentProblems[currentProblemIndex]);
