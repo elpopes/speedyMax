@@ -53,8 +53,12 @@ function handleInput(input, onProgressUpdate) {
   const displayElement = document.getElementById("display");
 
   if (input === "Ent") {
-    checkAnswer(userInput, onProgressUpdate);
-    userInput = "";
+    if (!isGameActive) {
+      startGame(onProgressUpdate);
+    } else {
+      checkAnswer(userInput, onProgressUpdate);
+      userInput = "";
+    }
   } else if (input === "O/C") {
     userInput = "";
     if (isGameActive) {
@@ -106,6 +110,7 @@ function endGame() {
   const totalTime = (Date.now() - startTime) / 1000;
   const displayElement = document.getElementById("display");
   displayElement.textContent = `${totalTime.toFixed(2)} secs`;
+  isGameActive = false;
 }
 
 export { startGame, handleInput };
