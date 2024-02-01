@@ -45,28 +45,28 @@ let userInput = "";
 
 function handleInput(input, onProgressUpdate) {
   const displayElement = document.getElementById("display");
+  const typeSymbols = {
+    addition: "+",
+    subtraction: "-",
+    multiplication: "x",
+    division: "÷",
+  };
 
-  if (!isGameActive && input === "M") {
+  // Handle the "M" button and other operation buttons for problem type selection
+  if (
+    !isGameActive &&
+    (input === "M" || ["+", "-", "x", "÷"].includes(input))
+  ) {
+    if (input !== "M") {
+      updateProblemTypes(input);
+    }
     const currentTypes = getSelectedProblemTypes();
-    const typeSymbols = {
-      addition: "+",
-      subtraction: "-",
-      multiplication: "x",
-      division: "÷",
-    };
     const symbols = currentTypes.map((type) => typeSymbols[type]);
     displayElement.textContent = `Types = [${symbols.join(", ")}]`;
     return;
   }
 
-  if (!isGameActive && ["+", "-", "x", "÷"].includes(input)) {
-    updateProblemTypes(input);
-    const currentTypes = getSelectedProblemTypes();
-    const symbols = currentTypes.map((type) => typeSymbols[type]);
-    displayElement.textContent = `Types = [${symbols.join(", ")}]`;
-    return;
-  }
-
+  // Handle game start or answer check when "Ent" is pressed
   if (input === "Ent") {
     if (!isGameActive) {
       startGame(onProgressUpdate);
@@ -77,6 +77,7 @@ function handleInput(input, onProgressUpdate) {
     return;
   }
 
+  // Handle "O/C" for clearing input
   if (input === "O/C") {
     userInput = "";
     if (isGameActive) {
@@ -88,6 +89,7 @@ function handleInput(input, onProgressUpdate) {
     return;
   }
 
+  // Handle normal number and operation input
   userInput += input;
   displayElement.textContent = userInput;
 }
