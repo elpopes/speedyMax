@@ -1,6 +1,6 @@
 import { turnBarRed } from "./dotMatrixDisplay.js";
 import { generateProblems } from "./problemsGenerator.js";
-import { getSelectedProblemTypes } from "./settings.js";
+import { updateProblemTypes, getSelectedProblemTypes } from "./settings.js";
 
 let currentProblemIndex = 0;
 let currentProblems = [];
@@ -48,16 +48,22 @@ function handleInput(input, onProgressUpdate) {
 
   if (!isGameActive && input === "M") {
     const currentTypes = getSelectedProblemTypes();
-    displayElement.textContent = `Types = [${currentTypes.join(", ")}]`;
+    const typeSymbols = {
+      addition: "+",
+      subtraction: "-",
+      multiplication: "x",
+      division: "÷",
+    };
+    const symbols = currentTypes.map((type) => typeSymbols[type]);
+    displayElement.textContent = `Types = [${symbols.join(", ")}]`;
     return;
   }
 
   if (!isGameActive && ["+", "-", "x", "÷"].includes(input)) {
     updateProblemTypes(input);
-    if (selectedTypes.length === 0) {
-      selectedTypes.push("multiplication");
-    }
-    displayElement.textContent = `Types = [${selectedTypes.join(", ")}]`;
+    const currentTypes = getSelectedProblemTypes();
+    const symbols = currentTypes.map((type) => typeSymbols[type]);
+    displayElement.textContent = `Types = [${symbols.join(", ")}]`;
     return;
   }
 
@@ -68,7 +74,10 @@ function handleInput(input, onProgressUpdate) {
       checkAnswer(userInput, onProgressUpdate);
       userInput = "";
     }
-  } else if (input === "O/C") {
+    return;
+  }
+
+  if (input === "O/C") {
     userInput = "";
     if (isGameActive) {
       displayElement.textContent =
@@ -76,10 +85,11 @@ function handleInput(input, onProgressUpdate) {
     } else {
       displayElement.textContent = "0";
     }
-  } else {
-    userInput += input;
-    displayElement.textContent = userInput;
+    return;
   }
+
+  userInput += input;
+  displayElement.textContent = userInput;
 }
 
 function checkAnswer(userAnswer, onProgressUpdate) {
