@@ -1,5 +1,6 @@
 import { turnBarRed } from "./dotMatrixDisplay.js";
 import { generateProblems } from "./problemsGenerator.js";
+import { getSelectedProblemTypes } from "./settings.js";
 
 let currentProblemIndex = 0;
 let currentProblems = [];
@@ -25,16 +26,16 @@ function displayProblem(problem) {
 }
 
 function updateTimer() {
-  const currentTime = Date.now();
-  const elapsedTime = currentTime - startTime;
-  const seconds = Math.floor((elapsedTime / 1000) % 60);
-  const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
-
-  const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
   const timerDisplay = document.getElementById("timerDisplay");
-  timerDisplay.textContent = formattedTime;
+  if (timerDisplay) {
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - startTime;
+    const seconds = Math.floor((elapsedTime / 1000) % 60);
+    const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+    const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    timerDisplay.textContent = formattedTime;
+  }
 }
-
 function stopTimer() {
   clearInterval(timer);
   timer = null;
@@ -44,6 +45,21 @@ let userInput = "";
 
 function handleInput(input, onProgressUpdate) {
   const displayElement = document.getElementById("display");
+
+  if (!isGameActive && input === "M") {
+    const currentTypes = getSelectedProblemTypes();
+    displayElement.textContent = `Types = [${currentTypes.join(", ")}]`;
+    return;
+  }
+
+  if (!isGameActive && ["+", "-", "x", "÷"].includes(input)) {
+    updateProblemTypes(input);
+    if (selectedTypes.length === 0) {
+      selectedTypes.push("multiplication");
+    }
+    displayElement.textContent = `Types = [${selectedTypes.join(", ")}]`;
+    return;
+  }
 
   if (input === "Ent") {
     if (!isGameActive) {

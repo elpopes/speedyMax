@@ -1,3 +1,5 @@
+import { getSelectedProblemTypes } from "./settings.js";
+
 function generateProblem() {
   let problem = {
     question: "",
@@ -41,14 +43,23 @@ function generateProblem() {
     };
   };
 
-  const problemTypes = [
-    // createAdditionProblem,
-    // createSubtractionProblem,
-    createMultiplicationProblem,
-    createDivisionProblem,
-  ];
-  const createProblem =
+  const problemTypeFunctions = {
+    addition: createAdditionProblem,
+    subtraction: createSubtractionProblem,
+    multiplication: createMultiplicationProblem,
+    division: createDivisionProblem,
+  };
+
+  const selectedTypes = getSelectedProblemTypes();
+  let problemTypes = Object.keys(problemTypeFunctions);
+
+  if (selectedTypes.length > 0) {
+    problemTypes = problemTypes.filter((type) => selectedTypes.includes(type));
+  }
+
+  const selectedType =
     problemTypes[Math.floor(Math.random() * problemTypes.length)];
+  const createProblem = problemTypeFunctions[selectedType];
 
   problem = createProblem();
 
