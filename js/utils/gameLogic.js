@@ -52,7 +52,6 @@ function handleInput(input, onProgressUpdate) {
     division: "÷",
   };
 
-  // Handle the "M" button and other operation buttons for problem type selection
   if (
     !isGameActive &&
     (input === "M" || ["+", "-", "x", "÷"].includes(input))
@@ -66,7 +65,6 @@ function handleInput(input, onProgressUpdate) {
     return;
   }
 
-  // Handle game start or answer check when "Ent" is pressed
   if (input === "Ent") {
     if (!isGameActive) {
       startGame(onProgressUpdate);
@@ -77,7 +75,6 @@ function handleInput(input, onProgressUpdate) {
     return;
   }
 
-  // Handle "O/C" for clearing input
   if (input === "O/C") {
     userInput = "";
     if (isGameActive) {
@@ -89,7 +86,6 @@ function handleInput(input, onProgressUpdate) {
     return;
   }
 
-  // Handle normal number and operation input
   userInput += input;
   displayElement.textContent = userInput;
 }
