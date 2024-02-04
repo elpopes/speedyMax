@@ -9,11 +9,7 @@ export function updateProblemTypes(input) {
   };
   const selectedType = typeMap[input];
 
-  if (
-    selectedTypes.length === 1 &&
-    selectedTypes[0] === "multiplication" &&
-    selectedType === "multiplication"
-  ) {
+  if (selectedTypes.length === 1 && selectedType === "multiplication") {
     return;
   }
 
@@ -33,5 +29,5 @@ export function getSelectedProblemTypes() {
 }
 
 export function resetProblemTypes() {
-  selectedTypes = [];
+  selectedTypes = ["multiplication"];
 }
