@@ -48,13 +48,13 @@ function handleInput(input, onProgressUpdate) {
   const typeSymbols = {
     addition: "+",
     subtraction: "-",
-    multiplication: "x",
+    multiplication: "×",
     division: "÷",
   };
 
   if (
     !isGameActive &&
-    (input === "M" || ["+", "-", "x", "÷"].includes(input))
+    (input === "M" || ["+", "-", "×", "÷"].includes(input))
   ) {
     if (input !== "M") {
       updateProblemTypes(input);

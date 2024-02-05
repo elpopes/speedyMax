@@ -4,7 +4,7 @@ export function updateProblemTypes(input) {
   const typeMap = {
     "+": "addition",
     "-": "subtraction",
-    x: "multiplication",
+    "×": "multiplication",
     "÷": "division",
   };
   const selectedType = typeMap[input];
