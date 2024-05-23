@@ -157,9 +157,15 @@ function checkAnswer(userAnswer, onProgressUpdate) {
   const currentProblem = currentProblems[currentProblemIndex];
   const isCorrect = parseInt(userAnswer) === currentProblem.answer;
   const displayElement = document.getElementById("display");
+
   if (isCorrect) {
     console.log("Answer is correct, moving to next problem...");
     currentProblemIndex += 1;
+    if (currentProblemIndex < currentProblems.length) {
+      displayProblem(currentProblems[currentProblemIndex]);
+    } else {
+      endGame();
+    }
   } else {
     console.log("Answer is incorrect, showing correct answer...");
     turnBarRed();
@@ -170,14 +176,9 @@ function checkAnswer(userAnswer, onProgressUpdate) {
       } else {
         endGame();
       }
-    }, 500);
+    }, 3000);
   }
 
-  if (currentProblemIndex < currentProblems.length) {
-    displayProblem(currentProblems[currentProblemIndex]);
-  } else {
-    endGame();
-  }
   onProgressUpdate((currentProblemIndex + 1) / currentProblems.length);
 }
 
