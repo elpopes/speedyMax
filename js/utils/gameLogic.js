@@ -13,6 +13,7 @@ let timer = null;
 let startTime;
 let isGameActive = false;
 let isSettingProblemCount = false;
+let isSettingProblemTypes = false; // New flag for setting problem types
 let problemCountInput = "";
 let userInput = "";
 
@@ -62,10 +63,20 @@ function handleInput(input, onProgressUpdate) {
 
   if (
     !isGameActive &&
-    (input === "M" || ["+", "-", "×", "÷"].includes(input))
+    isSettingProblemTypes &&
+    ["+", "-", "×", "÷"].includes(input)
   ) {
     console.log("Setting problem types...");
     handleSettingsInput(input);
+    return;
+  }
+
+  if (!isGameActive && input === "M") {
+    console.log("Entering problem types setting mode...");
+    isSettingProblemTypes = true;
+    displayElement.textContent = `Types: ${getSelectedProblemTypes().join(
+      ", "
+    )}`;
     return;
   }
 
@@ -95,6 +106,13 @@ function handleInput(input, onProgressUpdate) {
   if (input === "O/C") {
     console.log("Clearing user input...");
     clearUserInput();
+    return;
+  }
+
+  if (!isGameActive) {
+    console.log("Displaying input:", input);
+    userInput += input;
+    displayElement.textContent = userInput;
     return;
   }
 
