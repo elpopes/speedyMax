@@ -1,15 +1,16 @@
-let selectedTypes = ["multiplication"];
+let selectedTypes = ["×"];
+let problemCount = 10;
 
 export function updateProblemTypes(input) {
   const typeMap = {
-    "+": "addition",
-    "-": "subtraction",
-    "×": "multiplication",
-    "÷": "division",
+    "+": "+",
+    "-": "-",
+    "×": "×",
+    "÷": "÷",
   };
   const selectedType = typeMap[input];
 
-  if (selectedTypes.length === 1 && selectedType === "multiplication") {
+  if (selectedTypes.length === 1 && selectedType === "×") {
     return;
   }
 
@@ -20,8 +21,16 @@ export function updateProblemTypes(input) {
   }
 
   if (selectedTypes.length === 0) {
-    selectedTypes.push("multiplication");
+    selectedTypes.push("×");
   }
+}
+
+export function setProblemCount(newCount) {
+  problemCount = newCount;
+}
+
+export function getProblemCount() {
+  return problemCount;
 }
 
 export function getSelectedProblemTypes() {
@@ -29,5 +38,5 @@ export function getSelectedProblemTypes() {
 }
 
 export function resetProblemTypes() {
-  selectedTypes = ["multiplication"];
+  selectedTypes = ["×"];
 }

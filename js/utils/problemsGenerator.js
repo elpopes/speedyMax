@@ -1,4 +1,4 @@
-import { getSelectedProblemTypes } from "./settings.js";
+import { getSelectedProblemTypes, getProblemCount } from "./settings.js";
 
 function generateProblem() {
   let problem = {
@@ -28,7 +28,7 @@ function generateProblem() {
     const num1 = Math.floor(Math.random() * 13);
     const num2 = Math.floor(Math.random() * 13);
     return {
-      question: `${num1} x ${num2}`,
+      question: `${num1} × ${num2}`,
       answer: num1 * num2,
     };
   };
@@ -44,10 +44,10 @@ function generateProblem() {
   };
 
   const problemTypeFunctions = {
-    addition: createAdditionProblem,
-    subtraction: createSubtractionProblem,
-    multiplication: createMultiplicationProblem,
-    division: createDivisionProblem,
+    "+": createAdditionProblem,
+    "-": createSubtractionProblem,
+    "×": createMultiplicationProblem,
+    "÷": createDivisionProblem,
   };
 
   const selectedTypes = getSelectedProblemTypes();
@@ -66,8 +66,9 @@ function generateProblem() {
   return problem;
 }
 
-function generateProblems(count) {
+function generateProblems() {
   const problems = [];
+  const count = getProblemCount();
   for (let i = 0; i < count; i++) {
     problems.push(generateProblem());
   }
