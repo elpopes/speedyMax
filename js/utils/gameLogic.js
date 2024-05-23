@@ -13,9 +13,12 @@ let timer = null;
 let startTime;
 let isGameActive = false;
 let isSettingProblemCount = false;
-let isSettingProblemTypes = false; // New flag for setting problem types
+let isSettingProblemTypes = false;
 let problemCountInput = "";
 let userInput = "";
+
+const MAX_USER_INPUT_LENGTH = 10;
+const MAX_PROBLEM_COUNT = 999;
 
 function startGame(onProgressUpdate) {
   console.log("Starting game...");
@@ -110,16 +113,24 @@ function handleInput(input, onProgressUpdate) {
   }
 
   if (!isGameActive) {
-    console.log("Displaying input:", input);
-    userInput += input;
-    displayElement.textContent = userInput;
+    if (userInput.length < MAX_USER_INPUT_LENGTH) {
+      console.log("Displaying input:", input);
+      userInput += input;
+      displayElement.textContent = userInput;
+    } else {
+      console.log("User input reached max length");
+    }
     return;
   }
 
   if (isGameActive) {
-    console.log("Adding to user input:", input);
-    userInput += input;
-    displayElement.textContent = userInput;
+    if (userInput.length < MAX_USER_INPUT_LENGTH) {
+      console.log("Adding to user input:", input);
+      userInput += input;
+      displayElement.textContent = userInput;
+    } else {
+      console.log("User input reached max length");
+    }
   }
 }
 
@@ -135,7 +146,7 @@ function handleSettingsInput(input) {
 
 function handleProblemCountSetting(input, displayElement) {
   console.log("Handling problem count setting:", input);
-  if (!isNaN(input)) {
+  if (!isNaN(input) && problemCountInput.length < 3) {
     problemCountInput += input;
     displayElement.textContent = problemCountInput;
   } else if (input === "Ent") {
@@ -147,9 +158,9 @@ function handleProblemCountSetting(input, displayElement) {
 function finalizeProblemCountSetting(displayElement) {
   console.log("Finalizing problem count...");
   const count = parseInt(problemCountInput);
-  if (!isNaN(count) && count > 0) {
+  if (!isNaN(count) && count > 0 && count <= MAX_PROBLEM_COUNT) {
     setProblemCount(count);
-    displayElement.textContent = `Set ${count} problems`;
+    displayElement.textContent = `Set ${count} probs`;
     setTimeout(() => {
       isSettingProblemCount = false;
       problemCountInput = "";
@@ -157,6 +168,10 @@ function finalizeProblemCountSetting(displayElement) {
       isGameActive = false; // Reset game
       console.log("Problem count set and game reset");
     }, 2000);
+  } else {
+    console.log("Invalid problem count, resetting...");
+    problemCountInput = "";
+    displayElement.textContent = "Set Count:";
   }
 }
 
