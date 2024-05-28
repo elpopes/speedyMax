@@ -259,7 +259,7 @@ function endGame() {
   const totalTime = (Date.now() - startTime) / 1000;
   console.log(`Total time: ${totalTime.toFixed(2)} secs`);
 
-  displayElement.textContent = `Time: ${totalTime.toFixed(1)} secs`;
+  displayElement.textContent = `${totalTime.toFixed(1)} secs`;
   console.log(
     `Updated displayElement with total time: ${displayElement.textContent}`
   );
