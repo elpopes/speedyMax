@@ -19,16 +19,18 @@ let userInput = "";
 
 const MAX_USER_INPUT_LENGTH = 10;
 const MAX_PROBLEM_COUNT = 999;
+const displayElement = document.getElementById("display");
 
 function startGame(onProgressUpdate) {
   console.log("Starting game...");
+  clearUserInput();
   if (isGameActive || isSettingProblemCount) {
     console.log("Game is already active or setting problem count");
     return;
   }
   isGameActive = true;
   const problemsCount = getProblemCount() || 10;
-  currentProblems = generateProblems();
+  currentProblems = generateProblems(problemsCount);
   currentProblemIndex = 0;
   onProgressUpdate(0);
   startTime = Date.now();
@@ -38,8 +40,10 @@ function startGame(onProgressUpdate) {
 
 function displayProblem(problem) {
   console.log("Displaying problem:", problem.question);
-  const displayElement = document.getElementById("display");
   displayElement.textContent = problem.question;
+  console.log(
+    `Updated displayElement with problem question: ${displayElement.textContent}`
+  );
 }
 
 function updateTimer() {
@@ -62,7 +66,6 @@ function stopTimer() {
 
 function handleInput(input, onProgressUpdate) {
   console.log("Handling input:", input);
-  const displayElement = document.getElementById("display");
 
   if (
     !isGameActive &&
@@ -94,6 +97,15 @@ function handleInput(input, onProgressUpdate) {
   if (isSettingProblemCount) {
     console.log("In problem count setting mode...");
     handleProblemCountSetting(input, displayElement);
+    return;
+  }
+
+  if (!isGameActive && input === "Ent") {
+    if (userInput.length > 0) {
+      evaluateUserInput();
+    } else {
+      displayElement.textContent = "ENT TO START";
+    }
     return;
   }
 
@@ -136,12 +148,18 @@ function handleInput(input, onProgressUpdate) {
 
 function handleSettingsInput(input) {
   console.log("Handling settings input:", input);
-  const displayElement = document.getElementById("display");
   if (input !== "M") {
     updateProblemTypes(input);
   }
   const currentTypes = getSelectedProblemTypes();
   displayElement.textContent = `Types: ${currentTypes.join(", ")}`;
+  if (input === "Ent") {
+    isSettingProblemTypes = false;
+    displayElement.textContent = `Types set: ${currentTypes.join(", ")}`;
+    setTimeout(() => {
+      displayElement.textContent = "ENT TO START";
+    }, 2000);
+  }
 }
 
 function handleProblemCountSetting(input, displayElement) {
@@ -165,7 +183,7 @@ function finalizeProblemCountSetting(displayElement) {
       isSettingProblemCount = false;
       problemCountInput = "";
       displayElement.textContent = "ENT TO START";
-      isGameActive = false; // Reset game
+      isGameActive = false;
       console.log("Problem count set and game reset");
     }, 2000);
   } else {
@@ -178,10 +196,32 @@ function finalizeProblemCountSetting(displayElement) {
 function clearUserInput() {
   console.log("Clearing user input...");
   userInput = "";
-  const displayElement = document.getElementById("display");
   displayElement.textContent = isGameActive
     ? currentProblems[currentProblemIndex].question
     : "ENT TO START";
+}
+
+function evaluateUserInput() {
+  if (/^[0-9]+$/.test(userInput)) {
+    displayElement.textContent = userInput;
+  } else if (/^[0-9+\-×÷]+$/.test(userInput)) {
+    try {
+      const expression = userInput.replace("×", "*").replace("÷", "/");
+      const result = eval(expression);
+      displayElement.textContent = result;
+    } catch {
+      displayElement.textContent = "ERROR";
+      setTimeout(() => {
+        displayElement.textContent = "ENT TO START";
+      }, 2000);
+    }
+  } else {
+    displayElement.textContent = "ERROR";
+    setTimeout(() => {
+      displayElement.textContent = "ENT TO START";
+    }, 2000);
+  }
+  userInput = "";
 }
 
 function checkAnswer(userAnswer, onProgressUpdate) {
@@ -189,39 +229,45 @@ function checkAnswer(userAnswer, onProgressUpdate) {
   if (!userAnswer) return;
   const currentProblem = currentProblems[currentProblemIndex];
   const isCorrect = parseInt(userAnswer) === currentProblem.answer;
-  const displayElement = document.getElementById("display");
 
   if (isCorrect) {
     console.log("Answer is correct, moving to next problem...");
     currentProblemIndex += 1;
+    onProgressUpdate(currentProblemIndex / currentProblems.length);
+
     if (currentProblemIndex < currentProblems.length) {
       displayProblem(currentProblems[currentProblemIndex]);
     } else {
       endGame();
+      return;
     }
   } else {
     console.log("Answer is incorrect, showing correct answer...");
     turnBarRed();
     displayElement.textContent = `${currentProblem.question} = ${currentProblem.answer}`;
     setTimeout(() => {
-      if (currentProblemIndex < currentProblems.length) {
-        displayProblem(currentProblems[currentProblemIndex]);
-      } else {
-        endGame();
-      }
+      currentProblems.push(currentProblems.splice(currentProblemIndex, 1)[0]);
+      console.log("Moved incorrect problem to the back of the queue");
+      displayProblem(currentProblems[currentProblemIndex]);
     }, 3000);
   }
-
-  onProgressUpdate((currentProblemIndex + 1) / currentProblems.length);
 }
 
 function endGame() {
   console.log("Ending game...");
   stopTimer();
   const totalTime = (Date.now() - startTime) / 1000;
-  const displayElement = document.getElementById("display");
-  displayElement.textContent = `${totalTime.toFixed(2)} secs`;
-  isGameActive = false;
+  console.log(`Total time: ${totalTime.toFixed(2)} secs`);
+
+  displayElement.textContent = `Time: ${totalTime.toFixed(1)} secs`;
+  console.log(
+    `Updated displayElement with total time: ${displayElement.textContent}`
+  );
+
+  setTimeout(() => {
+    console.log("Game ended");
+    isGameActive = false;
+  }, 5000);
 }
 
 export { startGame, handleInput };

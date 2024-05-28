@@ -17,6 +17,11 @@ document.querySelector(".button-grid").addEventListener("click", (event) => {
   }
 });
 
-document
-  .getElementById("btn-enter")
-  .addEventListener("click", () => startGame(handleProgressUpdate));
+document.getElementById("btn-enter").addEventListener("click", () => {
+  const displayElement = document.getElementById("display");
+  if (displayElement.textContent === "ENT TO START") {
+    startGame(handleProgressUpdate);
+  } else {
+    handleInput("Ent", handleProgressUpdate);
+  }
+});
