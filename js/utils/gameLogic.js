@@ -6,6 +6,11 @@ import {
   setProblemCount,
   getProblemCount,
 } from "./settings.js";
+import {
+  toggleCalculatorMode,
+  handleCalculatorInput,
+  isCalculatorMode,
+} from "./calculatorMode.js";
 
 let currentProblemIndex = 0;
 let currentProblems = [];
@@ -67,6 +72,11 @@ function stopTimer() {
 function handleInput(input, onProgressUpdate) {
   console.log("Handling input:", input);
 
+  if (isCalculatorMode) {
+    userInput = handleCalculatorInput(input, userInput);
+    return;
+  }
+
   if (
     !isGameActive &&
     isSettingProblemTypes &&
@@ -91,6 +101,13 @@ function handleInput(input, onProgressUpdate) {
     isSettingProblemCount = true;
     problemCountInput = "";
     displayElement.textContent = "Set Count:";
+    return;
+  }
+
+  if (!isGameActive && input === "X") {
+    console.log("Toggling calculator mode...");
+    toggleCalculatorMode();
+    clearUserInput();
     return;
   }
 
@@ -269,5 +286,12 @@ function endGame() {
     isGameActive = false;
   }, 5000);
 }
+
+document.getElementById("btn-x").addEventListener("click", () => {
+  if (!isGameActive) {
+    toggleCalculatorMode();
+    clearUserInput();
+  }
+});
 
 export { startGame, handleInput };

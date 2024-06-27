@@ -2,17 +2,16 @@ let isCalculatorMode = false;
 
 function toggleCalculatorMode() {
   isCalculatorMode = !isCalculatorMode;
-  console.log(`Calculator mode: ${isCalculatorMode ? "ON" : "OFF"}`);
+  console.log(`Cal mode: ${isCalculatorMode ? "ON" : "OFF"}`);
   const displayElement = document.getElementById("display");
-  displayElement.textContent = isCalculatorMode
-    ? "Calculator Mode"
-    : "ENT TO START";
+  displayElement.textContent = isCalculatorMode ? "Calc Mode" : "ENT TO START";
 }
 
-function handleCalculatorInput(input) {
+function handleCalculatorInput(input, userInput) {
   const displayElement = document.getElementById("display");
   if (input === "O/C") {
-    clearUserInput();
+    userInput = "";
+    displayElement.textContent = "0";
   } else if (input === "Ent") {
     try {
       const result = eval(userInput.replace("×", "*").replace("÷", "/"));
@@ -20,17 +19,13 @@ function handleCalculatorInput(input) {
       userInput = "";
     } catch (error) {
       displayElement.textContent = "ERROR";
+      userInput = "";
     }
   } else {
     userInput += input;
     displayElement.textContent = userInput;
   }
-}
-
-function clearUserInput() {
-  userInput = "";
-  const displayElement = document.getElementById("display");
-  displayElement.textContent = "0";
+  return userInput;
 }
 
 export { toggleCalculatorMode, handleCalculatorInput, isCalculatorMode };

@@ -21,7 +21,33 @@ document.getElementById("btn-enter").addEventListener("click", () => {
   const displayElement = document.getElementById("display");
   if (displayElement.textContent === "ENT TO START") {
     startGame(handleProgressUpdate);
+    enterFullscreen();
+    lockOrientation();
   } else {
     handleInput("Ent", handleProgressUpdate);
   }
 });
+
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    // Firefox
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    // Chrome, Safari and Opera
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    // IE/Edge
+    elem.msRequestFullscreen();
+  }
+}
+
+function lockOrientation() {
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation
+      .lock("landscape")
+      .catch((error) => console.error("Failed to lock orientation:", error));
+  }
+}
