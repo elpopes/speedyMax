@@ -3,10 +3,6 @@ import {
   initializeDotMatrixDisplay,
   updateCompletionBar,
 } from "./utils/dotMatrixDisplay.js";
-import {
-  toggleCalculatorMode,
-  updateCalculatorModeDisplay,
-} from "./utils/calculatorMode.js";
 
 initializeDotMatrixDisplay(20);
 
@@ -32,12 +28,6 @@ document.getElementById("btn-enter").addEventListener("click", () => {
   }
 });
 
-document.getElementById("btn-x").addEventListener("click", () => {
-  toggleCalculatorMode();
-  clearUserInput();
-  updateCalculatorModeDisplay();
-});
-
 function enterFullscreen() {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
@@ -61,5 +51,3 @@ function lockOrientation() {
       .catch((error) => console.error("Failed to lock orientation:", error));
   }
 }
-
-export { handleProgressUpdate };

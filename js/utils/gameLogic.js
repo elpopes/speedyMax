@@ -10,6 +10,7 @@ import {
   toggleCalculatorMode,
   handleCalculatorInput,
   isCalculatorMode,
+  updateCalculatorModeDisplay,
 } from "./calculatorMode.js";
 
 let currentProblemIndex = 0;
@@ -108,6 +109,7 @@ function handleInput(input, onProgressUpdate) {
     console.log("Toggling calculator mode...");
     toggleCalculatorMode();
     clearUserInput();
+    updateCalculatorModeDisplay();
     return;
   }
 
