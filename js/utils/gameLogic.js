@@ -72,7 +72,7 @@ function stopTimer() {
 function handleInput(input, onProgressUpdate) {
   console.log("Handling input:", input);
 
-  if (isCalculatorMode) {
+  if (isCalculatorMode()) {
     userInput = handleCalculatorInput(input, userInput);
     return;
   }
@@ -286,12 +286,5 @@ function endGame() {
     isGameActive = false;
   }, 5000);
 }
-
-document.getElementById("btn-x").addEventListener("click", () => {
-  if (!isGameActive) {
-    toggleCalculatorMode();
-    clearUserInput();
-  }
-});
 
 export { startGame, handleInput };
