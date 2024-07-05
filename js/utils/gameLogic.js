@@ -74,7 +74,6 @@ function handleInput(input, onProgressUpdate) {
   console.log("Handling input:", input);
 
   if (isCalculatorMode) {
-    // Correctly using the variable
     if (input === "X") {
       toggleCalculatorMode();
       clearUserInput();

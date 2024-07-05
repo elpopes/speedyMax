@@ -3,27 +3,33 @@ let isCalculatorMode = false;
 function toggleCalculatorMode() {
   isCalculatorMode = !isCalculatorMode;
   console.log(`Calc mode: ${isCalculatorMode ? "ON" : "OFF"}`);
-  updateCalculatorModeDisplay(); // Update the display
+  updateCalculatorModeDisplay();
 }
 
 function handleCalculatorInput(input, userInput) {
   const displayElement = document.getElementById("display");
+
   if (input === "O/C") {
     userInput = "";
     displayElement.textContent = "0";
-  } else if (input === "Ent") {
+    return userInput;
+  }
+
+  if (input === "Ent") {
+    console.log(`Evaluating input: ${userInput}`);
     try {
       const result = eval(userInput.replace("×", "*").replace("÷", "/"));
       displayElement.textContent = result;
-      userInput = "";
+      userInput = result.toString();
     } catch (error) {
       displayElement.textContent = "ERROR";
       userInput = "";
     }
-  } else {
-    userInput += input;
-    displayElement.textContent = userInput;
+    return userInput;
   }
+
+  userInput += input;
+  displayElement.textContent = userInput;
   return userInput;
 }
 
