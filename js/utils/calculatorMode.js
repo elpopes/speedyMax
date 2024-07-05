@@ -1,9 +1,9 @@
-let calculatorMode = false;
+let isCalculatorMode = false;
 
 function toggleCalculatorMode() {
-  calculatorMode = !calculatorMode;
-  console.log(`Calc mode: ${calculatorMode ? "ON" : "OFF"}`);
-  updateCalculatorModeDisplay();
+  isCalculatorMode = !isCalculatorMode;
+  console.log(`Calc mode: ${isCalculatorMode ? "ON" : "OFF"}`);
+  updateCalculatorModeDisplay(); // Update the display
 }
 
 function handleCalculatorInput(input, userInput) {
@@ -29,13 +29,9 @@ function handleCalculatorInput(input, userInput) {
 
 function updateCalculatorModeDisplay() {
   const displayElement = document.getElementById("display");
-  displayElement.textContent = calculatorMode
+  displayElement.textContent = isCalculatorMode
     ? "Calc Mode: On"
     : "Calc Mode: Off";
-}
-
-function isCalculatorMode() {
-  return calculatorMode;
 }
 
 export {
